@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeenat & Uzair - Royal Engagement</title>
     
+    <!-- Meta tags for WhatsApp Link Preview (OG Tags) -->
+    <meta property="og:title" content="Zeenat & Uzair - Royal Engagement" />
+    <meta property="og:description" content="We invite you to celebrate our special day with us." />
+    <meta property="og:image" content="photo.jpeg" />
+    <meta property="og:type" content="website" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="photo.jpeg">
+
     <!-- Royal Invitation Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,196 +21,123 @@
     
     <style>
         /* --- CUSTOM GOLDEN SCROLLBAR --- */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D4AF37; 
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b58d22; 
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b58d22; }
 
         /* --- GLOBAL STYLES --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: #0a0a0a; 
-            font-family: 'Playfair Display', serif;
-            color: #fff;
-            text-align: center;
-            overflow: hidden; 
-            scroll-behavior: smooth;
+        body { background-color: #0a0a0a; font-family: 'Playfair Display', serif; color: #fff; text-align: center; overflow: hidden; scroll-behavior: smooth; }
+
+        /* LOADING ANIMATION */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: #0a0a0a; z-index: 10000; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
         }
+        .spinner {
+            width: 50px; height: 50px; border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%; border-top-color: #D4AF37; animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #loader p { margin-top: 15px; font-family: 'Cinzel', serif; color: #D4AF37; letter-spacing: 2px; font-size: 12px; }
 
         /* SCROLL ANIMATIONS */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
-        
         .popup-reveal { opacity: 0; transform: scale(0.7); transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .popup-reveal.active { opacity: 1; transform: scale(1); }
 
         /* --- 1. VIDEO INTRO SCREEN --- */
-        #intro-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: #000; z-index: 9999; display: flex;
-            align-items: center; justify-content: center;
-            transition: opacity 1.5s ease-in-out; cursor: pointer;
-        }
-        #intro-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover;
-        }
-        #intro-text-box {
-            position: relative; z-index: 10; color: #fff;
-            transition: opacity 0.5s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-        .tap-text {
-            font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 3px;
-            border: 1px solid #D4AF37; padding: 12px 25px; border-radius: 50px; /* Slightly different button shape */
-            display: inline-block; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
-            color: #D4AF37; text-transform: uppercase;
-        }
+        #intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 1.5s ease-in-out; cursor: pointer; opacity: 0; pointer-events: none; }
+        #intro-screen.ready { opacity: 1; pointer-events: auto; }
+        #intro-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        #intro-text-box { position: relative; z-index: 10; color: #fff; transition: opacity 0.5s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .tap-text { font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 3px; border: 1px solid #D4AF37; padding: 12px 25px; border-radius: 50px; display: inline-block; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); color: #D4AF37; text-transform: uppercase; }
 
-        /* --- MAIN CARD CONTAINER (EMERALD GREEN & GOLDEN) --- */
+        /* --- MAIN CARD CONTAINER (EMERALD GREEN) --- */
         #main-wrapper { display: none; opacity: 0; transition: opacity 2s ease; padding: 20px; }
-        
-        .card-container {
-            max-width: 600px;
-            margin: 0 auto;
-            /* Royal Emerald Green Gradient Background */
-            background: linear-gradient(145deg, #0d3b26 0%, #03140c 100%); 
-            border: 3px solid #D4AF37;
-            outline: 1px dashed #D4AF37; /* Dashed inner border for a new look */
-            outline-offset: -12px;
-            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
-            border-radius: 20px; /* More rounded edges */
-            padding: 70px 20px 30px 20px;
-            position: relative;
-        }
-
+        .card-container { max-width: 600px; margin: 0 auto; background: linear-gradient(145deg, #0d3b26 0%, #03140c 100%); border: 3px solid #D4AF37; outline: 1px dashed #D4AF37; outline-offset: -12px; box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15); border-radius: 20px; padding: 70px 20px 30px 20px; position: relative; }
         h1, h2, h3 { font-family: 'Cinzel', serif; color: #D4AF37; }
-        
-        /* Typography */
         .bismillah-img { width: 140px; max-width: 80%; margin: 0 auto 10px auto; display: block; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); }
         .translation { font-size: 14px; font-style: italic; color: #e5c158; margin-bottom: 40px; }
         .small-caps { font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; color: #e5c158; margin-bottom: 15px; display: inline-block; }
-        
-        /* --- SECTION 1: HERO --- */
         .hero-names { font-family: 'Great Vibes', cursive; font-size: 75px; margin: 20px 0; color: #D4AF37; line-height: 1.1; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
         .hero-names span { font-family: 'Great Vibes', cursive; font-size: 45px; color: #f0d890; }
         .hero-date { font-family: 'Cinzel', serif; font-size: 20px; margin-top: 30px; font-weight: 600; color: #D4AF37; }
         .divider { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); margin: 30px auto; }
 
-        /* SCROLL UP INDICATOR ANIMATION */
-        .scroll-indicator {
-            margin-top: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0.8;
-            animation: bounce 2s infinite;
-        }
-        .scroll-indicator p {
-            font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #D4AF37; margin-bottom: 5px;
-        }
-        .scroll-indicator .arrow {
-            width: 15px; height: 15px;
-            border-bottom: 2px solid #D4AF37;
-            border-right: 2px solid #D4AF37;
-            transform: rotate(45deg);
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(10px); }
-            60% { transform: translateY(5px); }
-        }
+        .scroll-indicator { margin-top: 40px; display: flex; flex-direction: column; align-items: center; opacity: 0.8; animation: bounce 2s infinite; }
+        .scroll-indicator p { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #D4AF37; margin-bottom: 5px; }
+        .scroll-indicator .arrow { width: 15px; height: 15px; border-bottom: 2px solid #D4AF37; border-right: 2px solid #D4AF37; transform: rotate(45deg); }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(10px); } 60% { transform: translateY(5px); } }
 
-        /* --- SECTION 2: SCRATCH CARD & TIMER --- */
-        .scratch-container {
-            position: relative; width: 280px; height: 140px;
-            margin: 30px auto 40px auto;
-            border: 2px solid #D4AF37; border-radius: 8px;
-            overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-        }
-        .scratch-content {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #03140c; /* Deep Emerald Inside */
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-        }
+        .scratch-container { position: relative; width: 280px; height: 140px; margin: 30px auto 40px auto; border: 2px solid #D4AF37; border-radius: 8px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .scratch-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #03140c; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .scratch-content p:last-child { font-family: 'Cinzel', serif; font-size: 26px; color: #D4AF37; margin-top: 5px; font-weight: bold; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: grab; z-index: 2; }
         
-        /* Timer */
         .timer-grid { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
         .timer-box { background: linear-gradient(145deg, #092e1d, #020e08); padding: 15px; border-radius: 50%; width: 75px; height: 75px; border: 1px solid #D4AF37; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .timer-box p:first-child { font-family: 'Cinzel', serif; font-size: 22px; color: #D4AF37; font-weight: bold; line-height: 1; }
         .timer-box p:last-child { font-family: 'Playfair Display', serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #e5c158; margin-top: 3px; font-weight: 600; }
 
-        /* --- SECTION 3: CREATIVE COUPLE IMAGE --- */
-        .image-frame {
-            width: 100%; max-width: 300px; height: 400px;
-            margin: 0 auto 30px auto;
-            border-radius: 15px; /* Square with rounded edges instead of Arch for variety */
-            overflow: hidden; border: 3px solid #D4AF37; padding: 4px; background: #03140c;
-        }
+        .image-frame { width: 100%; max-width: 300px; height: 400px; margin: 0 auto 30px auto; border-radius: 15px; overflow: hidden; border: 3px solid #D4AF37; padding: 4px; background: #03140c; }
         .image-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; opacity: 0.95; }
         .ceremony-details h3 { font-size: 30px; margin-bottom: 10px; color: #D4AF37; }
         .ceremony-details p { font-size: 16px; color: #f0d890; font-style: italic; margin-bottom: 20px; }
         .time-badge { font-family: 'Cinzel', serif; display: inline-block; padding: 8px 20px; border-bottom: 1px solid #D4AF37; border-top: 1px solid #D4AF37; font-size: 16px; color: #D4AF37; font-weight: bold; letter-spacing: 1px; }
 
-        /* --- SECTION 4: THE VENUE --- */
         .venue-box { margin-top: 50px; padding-top: 30px; }
         .venue-box h2 { font-size: 32px; margin-bottom: 15px; }
         .venue-address { font-size: 17px; line-height: 1.8; color: #f0d890; margin-bottom: 25px; }
         .btn-map { font-family: 'Cinzel', serif; display: inline-block; background: linear-gradient(90deg, #D4AF37, #b58d22); color: #03140c; text-decoration: none; font-size: 13px; font-weight: bold; letter-spacing: 2px; padding: 12px 30px; border-radius: 50px; transition: 0.3s; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
         .btn-map:hover { background: linear-gradient(90deg, #b58d22, #D4AF37); transform: translateY(-2px); }
 
-        /* --- SECTION 5: FOOTER --- */
         footer { margin-top: 60px; padding-top: 30px; padding-bottom: 20px; border-top: 1px solid rgba(212, 175, 55, 0.4); }
         footer h2 { font-family: 'Great Vibes', cursive; font-size: 45px; color: #D4AF37; margin-bottom: 5px; }
         footer p { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; color: #e5c158; }
 
-        /* =========================================
-           📱 MOBILE RESPONSIVE MEDIA QUERIES
-           ========================================= */
+        /* NEXTGENADS AGENCY LINK */
+        .agency-link { display: block; margin-top: 25px; font-family: 'Montserrat', sans-serif; font-size: 11px; color: #aaa; text-decoration: none; transition: color 0.3s; }
+        .agency-link span { color: #D4AF37; font-weight: bold; }
+        .agency-link:hover span { color: #fff; }
+
         @media (max-width: 600px) {
             #main-wrapper { padding: 10px; }
             .card-container { padding: 50px 15px 25px 15px; outline-offset: -8px; }
-            
             .bismillah-img { width: 110px; }
             .translation { font-size: 12px; margin-bottom: 30px; }
             .hero-names { font-size: 55px; margin: 15px 0; }
             .hero-names span { font-size: 35px; }
             .hero-date { font-size: 16px; }
             .small-caps { font-size: 10px; }
-            
             .scratch-container { width: 240px; height: 120px; margin: 20px auto 30px auto; }
             .scratch-content p:last-child { font-size: 22px; }
-            
             .timer-grid { gap: 8px; }
             .timer-box { width: 60px; height: 60px; padding: 8px; }
             .timer-box p:first-child { font-size: 18px; }
             .timer-box p:last-child { font-size: 7px; }
-            
             .image-frame { max-width: 250px; height: 320px; }
             .ceremony-details h3 { font-size: 26px; }
             .ceremony-details p { font-size: 14px; }
             .time-badge { font-size: 14px; padding: 6px 16px; }
-            
             .venue-box h2 { font-size: 28px; }
             .venue-address { font-size: 15px; }
             .btn-map { font-size: 11px; padding: 10px 25px; }
-            
             footer h2 { font-size: 35px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- LOADING SCREEN -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <p>Loading Invitation...</p>
+    </div>
 
     <!-- VIDEO INTRO SCREEN -->
     <div id="intro-screen">
@@ -213,47 +149,34 @@
         </div>
     </div>
 
-    <!-- MAIN WEBSITE (EMERALD & GOLDEN CARD) -->
+    <!-- MAIN WEBSITE -->
     <div id="main-wrapper">
         <div class="card-container">
-            
-            <!-- 1. HEADER & NAMES -->
             <section class="reveal">
                 <img src="bismillah.png" alt="Bismillah" class="bismillah-img">
                 <p class="translation">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
-                
                 <p class="small-caps">With joyful hearts</p><br>
                 <p class="small-caps">Together with our families</p>
-                
-                <!-- NAMES SWAPPED HERE -->
                 <h1 class="hero-names">Zeenat <br><span>&</span><br> Uzair</h1>
-                
                 <div class="divider"></div>
                 <p class="hero-date">Wednesday, 11 November 2026</p>
-
-                <!-- SCROLL UP ANIMATION INDICATOR -->
                 <div class="scroll-indicator">
                     <p>Scroll up</p>
                     <div class="arrow"></div>
                 </div>
             </section>
 
-            <!-- 2. SCRATCH CARD & TIMER (With Popup Animation) -->
             <section class="popup-reveal" style="margin-top: 50px;">
                 <p class="small-caps">A date to remember</p>
-                
                 <div class="scratch-container">
                     <div class="scratch-content">
                         <p class="small-caps" style="margin-bottom: 0; border:none;">Our special day</p>
                         <p>11 . 11 . 2026</p>
                     </div>
-                    <!-- Scratch Canvas -->
                     <canvas id="scratchCanvas"></canvas>
                 </div>
-
                 <div class="divider" style="width: 50px; margin: 40px auto;"></div>
                 <p class="small-caps">Until we celebrate</p>
-                
                 <div class="timer-grid">
                     <div class="timer-box"><p id="days">00</p><p>Days</p></div>
                     <div class="timer-box"><p id="hours">00</p><p>Hours</p></div>
@@ -262,12 +185,10 @@
                 </div>
             </section>
 
-            <!-- 3. CREATIVE COUPLE IMAGE -->
             <section class="reveal" style="margin-top: 50px;">
                 <div class="image-frame reveal">
                     <img src="photo.jpeg" alt="Engagement Ceremony">
                 </div>
-                
                 <div class="ceremony-details reveal">
                     <h3>Ring Ceremony</h3>
                     <p>A beautiful promise, surrounded by<br>the people we love the most.</p>
@@ -275,7 +196,6 @@
                 </div>
             </section>
 
-            <!-- 4. THE VENUE -->
             <section class="venue-box reveal">
                 <p class="small-caps">Join us in Surat</p>
                 <h2>The Venue</h2>
@@ -287,24 +207,46 @@
                 <a href="https://www.google.com/maps/search/?api=1&query=195%2C+A-10%2C+Kosad+Aawas%2C+Amroli%2C+Surat%2C+Gujarat" target="_blank" class="btn-map">GET DIRECTIONS</a>
             </section>
 
-            <!-- 5. FOOTER -->
             <footer class="reveal">
-                <!-- NAMES SWAPPED HERE -->
                 <h2>Zeenat & Uzair</h2>
                 <p>11 . 11 . 2026</p>
+                
+                <!-- NextGenAds Link -->
+                <a href="https://wa.me/919313955066?text=Hello,%20I%20need%20a%20digital%20invitatin%20card%20wesite.%20What's%20your%20charges?" target="_blank" class="agency-link">
+                    Developed by <span>NextGenAds Marketing Agency</span>
+                </a>
             </footer>
-
         </div>
     </div>
 
     <!-- SCRIPTS -->
     <script>
-        // --- 1. VIDEO INTRO & AUTO SCROLL LOGIC ---
+        const loader = document.getElementById('loader');
         const introScreen = document.getElementById('intro-screen');
         const introVideo = document.getElementById('intro-video');
         const introTextBox = document.getElementById('intro-text-box');
         const mainWrapper = document.getElementById('main-wrapper');
         let autoScrollInterval;
+
+        // LOAD EVENT: Wait for video to be ready before showing intro screen
+        introVideo.addEventListener('canplaythrough', () => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                introScreen.classList.add('ready');
+            }, 500);
+        });
+        
+        // Fallback if video takes too long (e.g. 5 seconds)
+        setTimeout(() => {
+            if(loader.style.display !== 'none') {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    introScreen.classList.add('ready');
+                }, 500);
+            }
+        }, 5000);
 
         introScreen.addEventListener('click', () => {
             introTextBox.style.opacity = '0'; 
@@ -314,54 +256,34 @@
         introVideo.addEventListener('ended', () => {
             introScreen.style.opacity = '0';
             mainWrapper.style.display = 'block';
-            
             setTimeout(() => {
                 introScreen.style.display = 'none';
                 document.body.style.overflow = 'auto'; 
                 mainWrapper.style.opacity = '1';
-                
                 initScratchCard(); 
                 triggerScrollAnimations();
                 startAutoScroll();
             }, 1000); 
         });
 
-        function startAutoScroll() {
-            autoScrollInterval = setInterval(() => {
-                window.scrollBy(0, 1);
-            }, 40); 
-        }
-
-        function stopAutoScroll() {
-            if (autoScrollInterval) {
-                clearInterval(autoScrollInterval);
-                autoScrollInterval = null;
-            }
-        }
+        function startAutoScroll() { autoScrollInterval = setInterval(() => { window.scrollBy(0, 1); }, 40); }
+        function stopAutoScroll() { if (autoScrollInterval) { clearInterval(autoScrollInterval); autoScrollInterval = null; } }
         
         window.addEventListener('touchstart', stopAutoScroll, {passive: true});
         window.addEventListener('wheel', stopAutoScroll, {passive: true});
         window.addEventListener('click', stopAutoScroll);
         window.addEventListener('mousedown', stopAutoScroll);
 
-        // --- 2. SCROLL ANIMATIONS ---
         function triggerScrollAnimations() {
             const reveals = document.querySelectorAll('.reveal');
             const popups = document.querySelectorAll('.popup-reveal');
-            
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
+                entries.forEach(entry => { if(entry.isIntersecting) { entry.target.classList.add('active'); } });
             }, { threshold: 0.1 });
-            
             reveals.forEach(reveal => observer.observe(reveal));
             popups.forEach(popup => observer.observe(popup));
         }
 
-        // --- 3. SCRATCH CARD LOGIC ---
         const canvas = document.getElementById('scratchCanvas');
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
@@ -369,38 +291,22 @@
         function initScratchCard() {
             canvas.width = canvas.parentElement.offsetWidth;
             canvas.height = canvas.parentElement.offsetHeight;
-            
             let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, '#e5c158');
-            gradient.addColorStop(0.5, '#D4AF37');
-            gradient.addColorStop(1, '#a6821e');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
+            gradient.addColorStop(0, '#e5c158'); gradient.addColorStop(0.5, '#D4AF37'); gradient.addColorStop(1, '#a6821e');
+            ctx.fillStyle = gradient; ctx.fillRect(0, 0, canvas.width, canvas.height);
             let fontSize = window.innerWidth <= 600 ? '12px' : '14px';
-            ctx.font = `bold ${fontSize} Cinzel`;
-            ctx.fillStyle = '#03140c'; // Emerald Green text on gold card
-            ctx.textAlign = 'center';
+            ctx.font = `bold ${fontSize} Cinzel`; ctx.fillStyle = '#03140c'; ctx.textAlign = 'center';
             ctx.fillText('SCRATCH TO REVEAL', canvas.width / 2, canvas.height / 2 + 5);
         }
         
-        window.addEventListener('resize', () => {
-            if(mainWrapper.style.display === 'block') {
-                initScratchCard();
-            }
-        });
+        window.addEventListener('resize', () => { if(mainWrapper.style.display === 'block') { initScratchCard(); } });
 
         function scratch(e) {
-            if (!isDrawing) return;
-            e.preventDefault();
+            if (!isDrawing) return; e.preventDefault();
             const rect = canvas.getBoundingClientRect();
             let x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
             let y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
-            
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.beginPath();
-            ctx.arc(x, y, 22, 0, Math.PI * 2);
-            ctx.fill();
+            ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(x, y, 22, 0, Math.PI * 2); ctx.fill();
         }
 
         canvas.addEventListener('mousedown', () => { isDrawing = true; stopAutoScroll(); });
@@ -410,13 +316,9 @@
         canvas.addEventListener('touchend', () => isDrawing = false);
         canvas.addEventListener('touchmove', scratch, {passive: false});
 
-        // --- 4. COUNTDOWN TIMER LOGIC ---
         const countDownDate = new Date("Nov 11, 2026 16:00:00").getTime();
         setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
-            if(distance < 0) return; 
-
+            const now = new Date().getTime(); const distance = countDownDate - now; if(distance < 0) return; 
             document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
             document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
             document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
