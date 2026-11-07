@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zeenat & Uzair - Royal Engagement</title>
     
-    <!-- Meta tags for WhatsApp Link Preview (OG Tags) -->
+    <!-- Meta tags for WhatsApp Link Preview -->
     <meta property="og:title" content="Zeenat & Uzair - Royal Engagement" />
     <meta property="og:description" content="We invite you to celebrate our special day with us." />
     <meta property="og:image" content="photo.jpeg" />
@@ -22,27 +22,27 @@
     <style>
         /* --- CUSTOM GOLDEN SCROLLBAR --- */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #b58d22; }
+        ::-webkit-scrollbar-track { background: #F8F5F0; }
+        ::-webkit-scrollbar-thumb { background: #b58d22; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b6508; }
 
         /* --- GLOBAL STYLES --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0a0a0a; font-family: 'Playfair Display', serif; color: #fff; text-align: center; overflow: hidden; scroll-behavior: smooth; }
+        body { background-color: #F8F5F0; font-family: 'Playfair Display', serif; color: #3a2e28; text-align: center; overflow: hidden; scroll-behavior: smooth; }
 
         /* LOADING ANIMATION */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: #0a0a0a; z-index: 10000; display: flex;
+            background-color: #F8F5F0; z-index: 10000; display: flex;
             flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 0.5s ease;
         }
         .spinner {
-            width: 50px; height: 50px; border: 3px solid rgba(212, 175, 55, 0.3);
-            border-radius: 50%; border-top-color: #D4AF37; animation: spin 1s ease-in-out infinite;
+            width: 50px; height: 50px; border: 3px solid rgba(181, 141, 34, 0.2);
+            border-radius: 50%; border-top-color: #b58d22; animation: spin 1s ease-in-out infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        #loader p { margin-top: 15px; font-family: 'Cinzel', serif; color: #D4AF37; letter-spacing: 2px; font-size: 12px; }
+        #loader p { margin-top: 15px; font-family: 'Cinzel', serif; color: #b58d22; letter-spacing: 2px; font-size: 12px; }
 
         /* SCROLL ANIMATIONS */
         .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s ease-out; }
@@ -53,57 +53,58 @@
         /* --- 1. VIDEO INTRO SCREEN --- */
         #intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 1.5s ease-in-out; cursor: pointer; opacity: 0; pointer-events: none; }
         #intro-screen.ready { opacity: 1; pointer-events: auto; }
-        #intro-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        #intro-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
         #intro-text-box { position: relative; z-index: 10; color: #fff; transition: opacity 0.5s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-        .tap-text { font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 3px; border: 1px solid #D4AF37; padding: 12px 25px; border-radius: 50px; display: inline-block; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); color: #D4AF37; text-transform: uppercase; }
+        .tap-text { font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 3px; border: 1px solid #e5c158; padding: 12px 25px; border-radius: 50px; display: inline-block; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); color: #e5c158; text-transform: uppercase; }
 
-        /* --- MAIN CARD CONTAINER (EMERALD GREEN) --- */
+        /* --- MAIN CARD CONTAINER (OFF-WHITE) --- */
         #main-wrapper { display: none; opacity: 0; transition: opacity 2s ease; padding: 20px; }
-        .card-container { max-width: 600px; margin: 0 auto; background: linear-gradient(145deg, #0d3b26 0%, #03140c 100%); border: 3px solid #D4AF37; outline: 1px dashed #D4AF37; outline-offset: -12px; box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15); border-radius: 20px; padding: 70px 20px 30px 20px; position: relative; }
-        h1, h2, h3 { font-family: 'Cinzel', serif; color: #D4AF37; }
-        .bismillah-img { width: 140px; max-width: 80%; margin: 0 auto 10px auto; display: block; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); }
-        .translation { font-size: 14px; font-style: italic; color: #e5c158; margin-bottom: 40px; }
-        .small-caps { font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; color: #e5c158; margin-bottom: 15px; display: inline-block; }
-        .hero-names { font-family: 'Great Vibes', cursive; font-size: 75px; margin: 20px 0; color: #D4AF37; line-height: 1.1; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
-        .hero-names span { font-family: 'Great Vibes', cursive; font-size: 45px; color: #f0d890; }
-        .hero-date { font-family: 'Cinzel', serif; font-size: 20px; margin-top: 30px; font-weight: 600; color: #D4AF37; }
-        .divider { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); margin: 30px auto; }
+        .card-container { max-width: 600px; margin: 0 auto; background: linear-gradient(145deg, #FFFDF9 0%, #FAF3E6 100%); border: 3px solid #b58d22; outline: 1px dashed #b58d22; outline-offset: -12px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08); border-radius: 20px; padding: 70px 20px 30px 20px; position: relative; }
+        h1, h2, h3 { font-family: 'Cinzel', serif; color: #8b6508; }
+        .bismillah-img { width: 140px; max-width: 80%; margin: 0 auto 10px auto; display: block; filter: invert(0.3) sepia(1) saturate(3) hue-rotate(10deg); }
+        .translation { font-size: 14px; font-style: italic; color: #6e5849; margin-bottom: 40px; }
+        .small-caps { font-family: 'Cinzel', serif; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; color: #8b6508; margin-bottom: 15px; display: inline-block; font-weight: 600; }
+        
+        .hero-names { font-family: 'Great Vibes', cursive; font-size: 75px; margin: 20px 0; color: #b58d22; line-height: 1.1; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
+        .hero-names span { font-family: 'Great Vibes', cursive; font-size: 45px; color: #8b6508; }
+        .hero-date { font-family: 'Cinzel', serif; font-size: 20px; margin-top: 30px; font-weight: 700; color: #5c4738; }
+        .divider { width: 120px; height: 1px; background: linear-gradient(90deg, transparent, #b58d22, transparent); margin: 30px auto; }
 
-        .scroll-indicator { margin-top: 40px; display: flex; flex-direction: column; align-items: center; opacity: 0.8; animation: bounce 2s infinite; }
-        .scroll-indicator p { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #D4AF37; margin-bottom: 5px; }
-        .scroll-indicator .arrow { width: 15px; height: 15px; border-bottom: 2px solid #D4AF37; border-right: 2px solid #D4AF37; transform: rotate(45deg); }
+        .scroll-indicator { margin-top: 40px; display: flex; flex-direction: column; align-items: center; opacity: 0.7; animation: bounce 2s infinite; }
+        .scroll-indicator p { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #8b6508; margin-bottom: 5px; font-weight: 600; }
+        .scroll-indicator .arrow { width: 15px; height: 15px; border-bottom: 2px solid #8b6508; border-right: 2px solid #8b6508; transform: rotate(45deg); }
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(10px); } 60% { transform: translateY(5px); } }
 
-        .scratch-container { position: relative; width: 280px; height: 140px; margin: 30px auto 40px auto; border: 2px solid #D4AF37; border-radius: 8px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-        .scratch-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #03140c; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .scratch-content p:last-child { font-family: 'Cinzel', serif; font-size: 26px; color: #D4AF37; margin-top: 5px; font-weight: bold; }
+        .scratch-container { position: relative; width: 280px; height: 140px; margin: 30px auto 40px auto; border: 2px solid #b58d22; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 25px rgba(139, 101, 8, 0.15); }
+        .scratch-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #FAF3E6; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .scratch-content p:last-child { font-family: 'Cinzel', serif; font-size: 26px; color: #8b6508; margin-top: 5px; font-weight: bold; }
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: grab; z-index: 2; }
         
         .timer-grid { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
-        .timer-box { background: linear-gradient(145deg, #092e1d, #020e08); padding: 15px; border-radius: 50%; width: 75px; height: 75px; border: 1px solid #D4AF37; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .timer-box p:first-child { font-family: 'Cinzel', serif; font-size: 22px; color: #D4AF37; font-weight: bold; line-height: 1; }
-        .timer-box p:last-child { font-family: 'Playfair Display', serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #e5c158; margin-top: 3px; font-weight: 600; }
+        .timer-box { background: linear-gradient(145deg, #ffffff, #f2efe9); padding: 15px; border-radius: 50%; width: 75px; height: 75px; border: 1px solid rgba(181, 141, 34, 0.4); box-shadow: 0 4px 10px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .timer-box p:first-child { font-family: 'Cinzel', serif; font-size: 22px; color: #b58d22; font-weight: bold; line-height: 1; }
+        .timer-box p:last-child { font-family: 'Playfair Display', serif; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #6e5849; margin-top: 3px; font-weight: 600; }
 
-        .image-frame { width: 100%; max-width: 300px; height: 400px; margin: 0 auto 30px auto; border-radius: 15px; overflow: hidden; border: 3px solid #D4AF37; padding: 4px; background: #03140c; }
-        .image-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; opacity: 0.95; }
-        .ceremony-details h3 { font-size: 30px; margin-bottom: 10px; color: #D4AF37; }
-        .ceremony-details p { font-size: 16px; color: #f0d890; font-style: italic; margin-bottom: 20px; }
-        .time-badge { font-family: 'Cinzel', serif; display: inline-block; padding: 8px 20px; border-bottom: 1px solid #D4AF37; border-top: 1px solid #D4AF37; font-size: 16px; color: #D4AF37; font-weight: bold; letter-spacing: 1px; }
+        .image-frame { width: 100%; max-width: 300px; height: 400px; margin: 0 auto 30px auto; border-radius: 15px; overflow: hidden; border: 2px solid #b58d22; padding: 4px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .image-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+        .ceremony-details h3 { font-size: 30px; margin-bottom: 10px; color: #8b6508; }
+        .ceremony-details p { font-size: 16px; color: #5c4738; font-style: italic; margin-bottom: 20px; }
+        .time-badge { font-family: 'Cinzel', serif; display: inline-block; padding: 8px 20px; border-bottom: 1px solid #b58d22; border-top: 1px solid #b58d22; font-size: 16px; color: #b58d22; font-weight: bold; letter-spacing: 1px; }
 
         .venue-box { margin-top: 50px; padding-top: 30px; }
-        .venue-box h2 { font-size: 32px; margin-bottom: 15px; }
-        .venue-address { font-size: 17px; line-height: 1.8; color: #f0d890; margin-bottom: 25px; }
-        .btn-map { font-family: 'Cinzel', serif; display: inline-block; background: linear-gradient(90deg, #D4AF37, #b58d22); color: #03140c; text-decoration: none; font-size: 13px; font-weight: bold; letter-spacing: 2px; padding: 12px 30px; border-radius: 50px; transition: 0.3s; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
-        .btn-map:hover { background: linear-gradient(90deg, #b58d22, #D4AF37); transform: translateY(-2px); }
+        .venue-box h2 { font-size: 32px; margin-bottom: 15px; color: #8b6508; }
+        .venue-address { font-size: 17px; line-height: 1.8; color: #3a2e28; margin-bottom: 25px; font-weight: 500; }
+        .btn-map { font-family: 'Cinzel', serif; display: inline-block; background: linear-gradient(90deg, #c49a45, #8b6508); color: #fff; text-decoration: none; font-size: 13px; font-weight: bold; letter-spacing: 2px; padding: 12px 30px; border-radius: 50px; transition: 0.3s; box-shadow: 0 4px 12px rgba(139, 101, 8, 0.3); }
+        .btn-map:hover { background: linear-gradient(90deg, #8b6508, #c49a45); transform: translateY(-2px); }
 
-        footer { margin-top: 60px; padding-top: 30px; padding-bottom: 20px; border-top: 1px solid rgba(212, 175, 55, 0.4); }
-        footer h2 { font-family: 'Great Vibes', cursive; font-size: 45px; color: #D4AF37; margin-bottom: 5px; }
-        footer p { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; color: #e5c158; }
-
+        footer { margin-top: 60px; padding-top: 30px; padding-bottom: 20px; border-top: 1px solid rgba(181, 141, 34, 0.3); }
+        footer h2 { font-family: 'Great Vibes', cursive; font-size: 45px; color: #b58d22; margin-bottom: 5px; }
+        footer p { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; color: #8b6508; font-weight: 600; }
+        
         /* NEXTGENADS AGENCY LINK */
-        .agency-link { display: block; margin-top: 25px; font-family: 'Montserrat', sans-serif; font-size: 11px; color: #aaa; text-decoration: none; transition: color 0.3s; }
-        .agency-link span { color: #D4AF37; font-weight: bold; }
-        .agency-link:hover span { color: #fff; }
+        .agency-link { display: block; margin-top: 25px; font-family: 'Montserrat', sans-serif; font-size: 11px; color: #888; text-decoration: none; transition: color 0.3s; }
+        .agency-link span { color: #8b6508; font-weight: bold; }
+        .agency-link:hover span { color: #b58d22; }
 
         @media (max-width: 600px) {
             #main-wrapper { padding: 10px; }
@@ -228,7 +229,6 @@
         const mainWrapper = document.getElementById('main-wrapper');
         let autoScrollInterval;
 
-        // LOAD EVENT: Wait for video to be ready before showing intro screen
         introVideo.addEventListener('canplaythrough', () => {
             loader.style.opacity = '0';
             setTimeout(() => {
@@ -237,7 +237,6 @@
             }, 500);
         });
         
-        // Fallback if video takes too long (e.g. 5 seconds)
         setTimeout(() => {
             if(loader.style.display !== 'none') {
                 loader.style.opacity = '0';
@@ -292,10 +291,10 @@
             canvas.width = canvas.parentElement.offsetWidth;
             canvas.height = canvas.parentElement.offsetHeight;
             let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-            gradient.addColorStop(0, '#e5c158'); gradient.addColorStop(0.5, '#D4AF37'); gradient.addColorStop(1, '#a6821e');
+            gradient.addColorStop(0, '#d1b46a'); gradient.addColorStop(0.5, '#b58d22'); gradient.addColorStop(1, '#8b6508');
             ctx.fillStyle = gradient; ctx.fillRect(0, 0, canvas.width, canvas.height);
             let fontSize = window.innerWidth <= 600 ? '12px' : '14px';
-            ctx.font = `bold ${fontSize} Cinzel`; ctx.fillStyle = '#03140c'; ctx.textAlign = 'center';
+            ctx.font = `bold ${fontSize} Cinzel`; ctx.fillStyle = '#FFFDF9'; ctx.textAlign = 'center';
             ctx.fillText('SCRATCH TO REVEAL', canvas.width / 2, canvas.height / 2 + 5);
         }
         
